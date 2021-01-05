@@ -1,0 +1,34 @@
+.home {
+    height: 84.5vh;
+}
+.main-tag{
+    margin-top: 1%;
+    font-family: Average;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 4vw;
+    color: #000000;
+}
+
+.sub-tag{
+    
+
+    width:50%;
+    height: 10%;
+    font-family: Average;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 3vw;
+
+    color: #180B66;
+}
+
+.featuresContainer{
+    padding-top: 5%;
+
+}
+.homeImg {
+    margin-top: 5%;
+    width: 70%;
+    
+}

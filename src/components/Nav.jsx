@@ -1,31 +1,53 @@
 import './Nav.css';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-
+import logo from '../assets/missa_logo.png';
 function Nav() {
     const navStyle = {
-        color: 'white'
+        color: '#180B66',
+        textDecoration: 'none'
+
     };
     return (
-        <nav className="nav">
-            <h2> Missa Period Tracker </h2>
-            <ul className="nav-links">
-                <Link style={navStyle} to="/">
-                    <li>Home Page</li>
-                </Link>
-                <Link style={navStyle} to="/about-us">
-                    <li> About Us </li>
-                </Link>
-                <Link style={navStyle} to="/login">
-                    <li> Login</li>
-                </Link>
-                <Link style={navStyle} to="/sign-up">
-                    <li> Sign Up</li>
-                </Link>
-            </ul>
-        </nav >
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <div class="navbar-brand d-flex">
+                    <img src={logo} alt="logo" height="36" class="d-inline-block align-top custom"></img>
+                    Missa Period Tracker
+                </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div class="me-auto">
+
+                    </div>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <Link class="nav-link" to="/">
+                                Home
+                            </Link>
+                        </li>
+                        <li class="nav-item">
+                            <Link class="nav-link" to="/about-us">About Us</Link>
+                        </li>
+                        <li class="nav-item">
+                            <Link class="nav-link" to="/login">Login</Link>
+                        </li>
+                        <li class="nav-item">
+                            <Link class="nav-link" to="/sign-up">Sign Up</Link>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
     );
 }
+
+
+
+
 
 class DashboardNav extends Component {
     constructor(props) {
@@ -34,30 +56,48 @@ class DashboardNav extends Component {
     }
     render() {
         const navStyle = {
-            color: 'white'
+            color: '#180B66',
+            textDecoration: 'none'
+
         };
         return (
-            <nav className="nav" >
-                <h2> Hi, {this.state.username} </h2>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <div class="navbar-brand d-flex">
+                        <img src={logo} alt="logo" height="36" class="d-inline-block align-top custom"></img>
+                    Missa Period Tracker
 
-                <ul className="nav-links">
-                    <Link style={navStyle} to="/">
-                        <li>Home Page</li>
-                    </Link>
-                    <Link style={navStyle} to="/dashboard/symptoms">
-                        <li> Symptoms </li>
-                    </Link>
-                    <Link style={navStyle} to="/dashboard/calendar">
-                        <li> Calendar</li>
-                    </Link>
-                    <Link style={navStyle} to="/dashboard/blog">
-                        <li> Blog </li>
-                    </Link>
-                    <Link style={navStyle} to="/dashboard/settings">
-                        <li> Settings </li>
-                    </Link>
-                </ul>
-            </nav >
+                    </div>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <div class="me-auto">
+
+                        </div>
+                        <p className="navbar-nav nav-link username">
+                            Hey, {this.state.username}
+                        </p>
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <Link class="nav-link" to="/">
+                                    Home
+                            </Link>
+                            </li>
+                            <li class="nav-item">
+                                <Link class="nav-link" to="/dashboard/symptoms">Symptoms</Link>
+                            </li>
+                            <li class="nav-item">
+                                <Link class="nav-link" to="/dashboard/calendar">Calendar</Link>
+                            </li>
+                            <li class="nav-item">
+                                <Link class="nav-link" to="/dashboard/blog">Blog</Link>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </nav>
         );
     }
 }

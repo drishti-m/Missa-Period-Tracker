@@ -1,7 +1,9 @@
 import React from 'react';
+import Calendar from 'react-calendar'
+import 'react-calendar/dist/Calendar.css';
 //import { BrowserRouter, Route, Switch, Link } from 'react-router-dom'
 
-function Calendar() {
+function PeriodCalendar() {
     return (
         <div className="calendar">
             <h2> Page Calendar</h2>
@@ -10,4 +12,4 @@ function Calendar() {
 }
 
 
-export default Calendar;
+export default PeriodCalendar;

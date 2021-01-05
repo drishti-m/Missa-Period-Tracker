@@ -1,4 +1,3 @@
-import logo from './assets/missa_logo.png'
 import './App.css';
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -6,12 +5,8 @@ import Login from './components/LoginComponent';
 import { DashboardNav, Nav } from './components/Nav';
 import SignUp from './components/SignUpComponent';
 import AboutUs from './components/AboutUsComponent';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Dashboard from './components/Dashboard';
-import Symptoms from './components/Symptoms';
-import Calendar from './components/Calendar';
-import Blog from './components/Blog';
-import Settings from './components/Settings';
+import Home from './components/Home';
 
 
 class App extends Component {
@@ -22,11 +17,8 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div className="App">
+        <div className="App bg-img">
           {!this.state.loggedIn ? <Nav /> : <DashboardNav />}
-          <div className="logo">
-            <img src={logo} />
-          </div>
           <div className="container">
             <Switch>
               <Route path="/" exact component={Home} />
@@ -36,17 +28,18 @@ class App extends Component {
               <Route path="/dashboard/" component={Dashboard} />
             </Switch>
           </div>
+          <footer class="bg-light text-center text-lg-start footer-custom">
+
+            <div class="text-center text-dark p-3">
+              © Made By: Drishti Maharjan
+          </div>
+          </footer>
         </div>
-      </Router>
+      </Router >
     );
   }
 }
 
-const Home = () => (
-  <div>
-    <h1> Home Page</h1>
-  </div>
-)
 
 
 export default App;

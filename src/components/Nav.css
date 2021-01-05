@@ -1,22 +1,44 @@
-
+.custom{
+padding-left: 10%;
+padding-right: 10%;
+}
 
 nav{
     display: flex;
     justify-content: space-around;
     align-items: center;
     min-height:  10vh;
-    background: dimgray;
-    color:white;
-  
+    background: rgba(245, 246, 252, 0.52);
+    
   }
   
   .nav-links{
-    width: 50%;
+    width: 40%;
     display: flex;
     justify-content: space-around;
     align-items: center;
     list-style: none;
-  
+    min-height:  10vh;
   
   }
 
+  .username{
+
+    padding-left: 50%;;
+  }
+
+  .nav-items{
+    font-family: Playfair Display;
+    color: #180B66;
+    mix-blend-mode: darken;
+    font-size: 20px;
+  }
+
+
+.logo{
+  justify-content: space-around;
+  align-items: center;
+  display: flex;
+  height: 60px;
+  width: 60px;
+}
