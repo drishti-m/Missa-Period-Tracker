@@ -17,7 +17,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div className="App bg-img">
+        <div className="App">
           {!this.state.loggedIn ? <Nav /> : <DashboardNav />}
           <div className="container">
             <Switch>
@@ -28,12 +28,13 @@ class App extends Component {
               <Route path="/dashboard/" component={Dashboard} />
             </Switch>
           </div>
-          <footer class="bg-light text-center text-lg-start footer-custom">
+          <div class="card-footer text-muted text-center">
+            © Made By: Drishti Maharjan
+  </div>
 
-            <div class="text-center text-dark p-3">
-              © Made By: Drishti Maharjan
-          </div>
-          </footer>
+
+
+
         </div>
       </Router >
     );

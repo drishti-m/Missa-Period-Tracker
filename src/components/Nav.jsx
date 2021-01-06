@@ -3,11 +3,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import logo from '../assets/missa_logo.png';
 function Nav() {
-    const navStyle = {
-        color: '#180B66',
-        textDecoration: 'none'
-
-    };
     return (
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
@@ -55,11 +50,7 @@ class DashboardNav extends Component {
         this.state = { username: "Drishti" };
     }
     render() {
-        const navStyle = {
-            color: '#180B66',
-            textDecoration: 'none'
 
-        };
         return (
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">

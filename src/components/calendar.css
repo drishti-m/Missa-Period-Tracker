@@ -1,3 +1,28 @@
-.calendar{
-    align: center;
+.calendarDiv{
+    padding-top: 1%;
+    padding-bottom: 1%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.logTitle{
+    margin-top:1%;
+    text-align: center;
+    font-family: Oranienbaum;
+}
+
+.custom-range-text{
+    font-family: Playfair Display;
+    color: #180B66;
+    mix-blend-mode: darken;
+    text-align: center;
+}
+
+.custom-range-box{
+    padding-top: 2%;
+}
+
+.custom-button{
+   margin-right: 1%;
 }

@@ -12,7 +12,7 @@ function Home() {
             <div className="row">
                 <div className="col">
                     <p className="main-tag"> Your Personal Period Tracker and Health Assistant </p>
-                    <p className="sub-tag"> Track your cycle with us! </p>
+                    <p className="sub-tag"> Track your ovulation cycle! </p>
                 </div>
                 <div className="col text-end">
                     <img className="homeImg " src={homePic} alt=""></img>
@@ -25,11 +25,12 @@ function Home() {
                             <div class="card-body">
                                 <div className="row">
                                     <div className="col-sm-3.5">
-                                        <img src={calendarImg}></img>
+                                        <img src={calendarImg} alt="calendar_image"></img>
                                     </div>
                                     <div className="col-sm-7.3">
                                         <p class="card-text">Log Your Period and Symptoms</p>
-                                    </div></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -38,11 +39,11 @@ function Home() {
                             <div class="card-body">
                                 <div className="row">
                                     <div className="col-sm-3.5">
-                                        <img src={insights}></img>
+                                        <img src={insights} alt="insight"></img>
                                     </div>
                                     <div className="col-sm-7.3">
                                         <p class="card-text">
-                                            Read insights from experts
+                                            Read insights from fellow women
                                         </p>
                                     </div>
                                 </div>
@@ -59,7 +60,7 @@ function Home() {
                                 <p class="card-text">
                                     <div className="row">
                                         <div className="col-sm-3.5">
-                                            <img src={community}></img>
+                                            <img src={community} alt="community"></img>
                                         </div>
                                         <div className="col-sm-7.3">
                                             Join a Period-Friendly Community
