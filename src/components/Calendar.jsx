@@ -6,17 +6,20 @@ import { Calendar, DateRange } from 'react-date-range';
 import moment from 'moment';
 
 
-//import { BrowserRouter, Route, Switch, Link } from 'react-router-dom'
-
 class PeriodCalendar extends Component {
+
 
     constructor() {
         super();
+        const currentDate = new Date();
+        currentDate.setDate(currentDate.getDate() + 17);
+
         this.state = {
             selectedDate: new Date(),
             startDate: new Date(),
-            endDate: new Date(),
-            key: 'selection'
+            endDate: currentDate,
+            key: 'selection',
+            validDate: true,
         };
     }
     SelectDate = (date) => {
@@ -25,10 +28,21 @@ class PeriodCalendar extends Component {
         console.log("after setting, Date selected is: ", this.state.selectedDate, date);
     }
     saveStartDate = (e) => {
-        this.setState({ startDate: this.state.selectedDate });
+        if (this.state.selectedDate <= this.state.endDate) {
+            this.setState({ validDate: true, startDate: this.state.selectedDate });
+        }
+        else {
+            this.setState({ validDate: false });
+        }
+
     }
     saveEndDate = (e) => {
-        this.setState({ endDate: this.state.selectedDate });
+        if (this.state.selectedDate >= this.state.startDate) {
+            this.setState({ validDate: true, endDate: this.state.selectedDate });
+        }
+        else {
+            this.setState({ validDate: false });
+        }
     }
     render() {
         return (
@@ -41,14 +55,17 @@ class PeriodCalendar extends Component {
                 </div>
 
                 <div class="container">
-
                     <div class="center-block text-center">
                         <button type="submit" class="btn btn-secondary btn-lg active custom-button" onClick={this.saveStartDate}>Save as Start Date</button>
                         <button type="submit" class="btn btn-secondary btn-lg active" onClick={this.saveEndDate}>Save as End Date</button>
                     </div>
-
-
                 </div>
+                {console.log("state:", this.state.validDate)}
+                {this.state.validDate ? <p class="d-lg-none"></p> :
+                    <div class="center-block text-center custom-invalid">
+                        <button type="button" class="btn btn-lg btn-danger" data-bs-toggle="popover"
+                            title="Popover title" data-bs-content=" Start Date can't be later than End Date!">Invalid Date Range</button>
+                    </div>}
 
                 <div class="col custom-range-box">
                     <div class="card text-dark bg-light mb-3 mx-auto w-50">
