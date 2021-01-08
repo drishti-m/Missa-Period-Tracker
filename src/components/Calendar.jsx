@@ -6,6 +6,7 @@ import { Calendar, DateRange } from 'react-date-range';
 import moment from 'moment';
 
 
+
 class PeriodCalendar extends Component {
 
 
@@ -44,6 +45,15 @@ class PeriodCalendar extends Component {
             this.setState({ validDate: false });
         }
     }
+    retrieveAPI = (e) => {
+        const proxyurl = "https://cors-anywhere.herokuapp.com/";
+        const url = "http://127.0.0.1:5000/user?id=drish";
+        //fetch('')
+        fetch(url)
+            .then(res => res.json())
+            .then((data) => console.log(data))
+            .catch(console.log)
+    }
     render() {
         return (
             <div className="PeriodCalendar" >
@@ -79,6 +89,7 @@ class PeriodCalendar extends Component {
                         </div>
                     </div>
                 </div>
+                <button onClick={this.retrieveAPI}>Get Data</button>
             </div >
         )
     }

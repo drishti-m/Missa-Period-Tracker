@@ -2,10 +2,11 @@ import json
 from flask import Flask, request, render_template, jsonify
 # import database
 from flask_mysqldb import MySQL
-
+from flask_cors import CORS
 
 
 app = Flask(__name__)
+CORS(app) 
 
 # db configuration required for our Flask
 app.config['MYSQL_HOST'] = 'localhost'
@@ -26,17 +27,19 @@ def index():
 """
 
 @app.route("/user", methods=['GET'])
+
 def page2():
+
     id = request.args.get('id')
     # create db connection
     cur = mysql.connection.cursor()
 
     # get data from db for that id
-    cur = mysql.connection.cursor()
+    #cur = mysql.connection.cursor()
     #cur.execute("SELECT Email_id, Name FROM User_Account WHERE User_ID=" + id)
     cur.execute('''SELECT * 
                    FROM user_period as UP, Period_Dates as PD
-                   WHERE UP.Username =''' + id + ''' AND PD.period_ID = UP.period_ID;''')
+                   WHERE UP.Username ="''' + id + '''" AND PD.period_ID = UP.period_ID;''')
     row_headers=[x[0] for x in cur.description] #this will extract row headers
     rv = cur.fetchall()
     # return as json
