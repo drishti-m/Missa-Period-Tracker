@@ -47,7 +47,10 @@ function Nav() {
 class DashboardNav extends Component {
     constructor(props) {
         super(props);
-        this.state = { username: "Drishti" };
+        //this.state = { username: "User" };
+    }
+    Logout = (e) => {
+        this.props.onLogout(false);
     }
     render() {
 
@@ -67,7 +70,7 @@ class DashboardNav extends Component {
 
                         </div>
                         <p className="navbar-nav nav-link username">
-                            Hey, {this.state.username}
+                            Hey, {this.props.username}
                         </p>
                         <ul class="navbar-nav">
                             <li class="nav-item">
@@ -82,7 +85,8 @@ class DashboardNav extends Component {
                                 <Link class="nav-link" to="/dashboard/calendar">Calendar</Link>
                             </li>
                             <li class="nav-item">
-                                <Link class="nav-link" to="/dashboard/blog">Blog</Link>
+                                <Link class="nav-link" to="/">
+                                    <span onClick={this.Logout}>Logout</span></Link>
                             </li>
                         </ul>
 

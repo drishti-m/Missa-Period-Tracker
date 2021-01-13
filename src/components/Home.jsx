@@ -50,9 +50,6 @@ function Home() {
 
                             </div>
                         </div>
-
-
-
                     </div>
                     <div className="col">
                         <div class="card text-dark bg-light mb-3">

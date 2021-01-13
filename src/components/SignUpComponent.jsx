@@ -12,10 +12,11 @@ class SignUp extends Component {
     check_user_name(value) {
         //TO-DO: call API and check if the entry exists
         if (value.length > 5) {
-
             this.setState({ valid_username: true, username: value });
         }
-        else { this.setState({ valid_username: false, username: value }); }
+        else {
+            this.setState({ valid_username: false, username: value });
+        }
         return;
     }
     check_password(confirm_password) {
@@ -26,8 +27,6 @@ class SignUp extends Component {
         else {
             this.setState({ matchingPassword: false, entered_matching_pw: true });
         }
-
-
         return;
     }
     check_submission(e) {
@@ -47,13 +46,11 @@ class SignUp extends Component {
         if (this.state.confirm_pw === "") {
             this.setState({ entered_matching_pw: false });
         }
-
         if (this.state.entered_email === true && this.state.entered_name === true &&
             this.state.entered_pw === true && this.state.entered_matching_pw === true &&
             this.state.valid_username === true && this.state.matchingPassword === true) {
 
             // TO-DO: add to database through API
-
             this.props.history.push("/dashboard");
         }
         return;
@@ -63,12 +60,11 @@ class SignUp extends Component {
     render() {
         return (
             < form className="login" >
-
-
                 <h3> Sign Up </h3>
                 <div className="form-group">
                     <label> Name </label>
                     <input type="name" className="form-control" placeholder="Your Full Name" onChange={(e) => this.setState({ name: e.target.value, entered_name: true })} />
+                    <p></p>
                 </div>
                 <div className="form-group">
                     <label> User Name </label>
@@ -78,12 +74,13 @@ class SignUp extends Component {
                 <div className="form-group">
                     <label> Email Address</label>
                     <input type="email" className="form-control" placeholder="Enter email" onChange={(e) => this.setState({ email_id: e.target.value, entered_email: true })} />
+                    <p></p>
                 </div>
 
                 <div className="form-group">
                     <label> Create Password </label>
                     <input type="password" className="form-control" placeholder="Enter password" onChange={(e) => this.setState({ password: e.target.value, entered_pw: true })} />
-
+                    <p></p>
                 </div>
 
                 <div className="form-group">

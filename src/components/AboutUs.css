@@ -1,0 +1,22 @@
+.about-us-title{
+    margin-top:1%;
+    font-family: Oranienbaum;
+}
+
+.logo{
+    width: 90%;
+    height:90%;
+    padding-left: 5%;
+}
+
+.below-logo{
+    font-family: monospace;
+}
+.contact{
+    font-family: Novamona;
+}
+
+.description{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
