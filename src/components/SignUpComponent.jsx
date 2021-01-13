@@ -6,7 +6,13 @@ class SignUp extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { name: "", username: "", email_id: "", password: "", confirm_pw: "", matchingPassword: true, valid_username: true, entered_name: true, entered_email: true, entered_pw: true, entered_matching_pw: true };
+        this.state = {
+            name: "", username: "", email_id: "",
+            password: "", confirm_pw: "", dob: "2021-01-01", matchingPassword: true,
+            valid_username: true, entered_name: true, entered_email: true,
+            entered_pw: true, entered_matching_pw: true, success: false,
+            backend_username: ""
+        };
 
     }
     check_user_name(value) {
@@ -46,13 +52,34 @@ class SignUp extends Component {
         if (this.state.confirm_pw === "") {
             this.setState({ entered_matching_pw: false });
         }
-        if (this.state.entered_email === true && this.state.entered_name === true &&
-            this.state.entered_pw === true && this.state.entered_matching_pw === true &&
-            this.state.valid_username === true && this.state.matchingPassword === true) {
-
+        if (this.state.email_id !== "" && this.state.name !== "" &&
+            this.state.password !== "" && this.state.confirm_pw !== "" &&
+            this.state.username !== "") {
             // TO-DO: add to database through API
-            this.props.history.push("/dashboard");
+            const url = "http://127.0.0.1:5000/signup?email=" + this.state.email_id +
+                "&username=" + this.state.username +
+                "&name=" + this.state.name +
+                "&pw=" + this.state.password +
+                "&dob=" + this.state.dob;
+            fetch(url)
+                .then(res => res.json())
+                .then((data) => {
+                    console.log(data);
+                    if (data[0].Username.length > 0) {
+                        this.setState({ success: true, backend_username: data[0].Username });
+                        this.props.username(data[0].Username);
+                        this.props.onSignup(true);
+                        this.props.routerprops.history.push("/dashboard/calendar");
+                        //this.props.history.push("/dashboard/calendar");
+                    }
+                    else {
+                        this.setState({ success: false });
+                    }
+                })
+                .catch(console.log)
+
         }
+
         return;
 
     }

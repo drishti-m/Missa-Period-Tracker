@@ -26,6 +26,9 @@ class App extends Component {
     this.setState({ username: e });
   }
 
+  CSignup = (props) => {
+    return <SignUp onSignup={this.ChangeLogin} routerprops={props} username={this.setUsername} />
+  }
 
   render() {
     return (
@@ -37,7 +40,7 @@ class App extends Component {
               <Route path="/" exact component={Home} />
               <Route path="/about-us" component={AboutUs} />
               <Route path="/login" component={this.CLogin} />
-              <Route path="/sign-up" component={SignUp} />
+              <Route path="/sign-up" component={this.CSignup} />
               <Route path="/dashboard/" component={Dashboard} />
             </Switch>
           </div>

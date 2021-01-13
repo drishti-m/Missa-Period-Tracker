@@ -43,7 +43,7 @@ function Nav() {
 
 
 
-
+//TO-DO: sve username state after refreshing page: localstorage and hooks?
 class DashboardNav extends Component {
     constructor(props) {
         super(props);

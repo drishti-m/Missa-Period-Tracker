@@ -6,7 +6,10 @@ class Login extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { email_id: "", password: "", goToDashboard: false, entered_email: true, entered_pw: true, valid_credentials: true };
+        this.state = {
+            email_id: "", password: "", goToDashboard: false, entered_email: true,
+            entered_pw: true, valid_credentials: true, backend_user_name: ""
+        };
 
     }
     checkLogin = (e) => {
@@ -20,18 +23,28 @@ class Login extends Component {
         if (this.state.password === "") {
             this.setState({ entered_pw: false });
         }
-        //TO-DO: check if this entry exists in database
-        if (this.state.password === "test" && this.state.email_id === "test") {
-            this.setState({ valid_credentials: true });
-            //TO-DO: get corresponding username from database
-            var username = "test";
-            this.props.username(username);
-            this.props.onLogin(true);
-            this.props.routerprops.history.push("/dashboard/calendar");
-        }
-        else {
-            this.setState({ valid_credentials: false });
-        }
+
+        const url = "http://127.0.0.1:5000/authentication?email=" +
+            this.state.email_id + "&password=" + this.state.password;
+        var username;
+        fetch(url)
+            .then(res => res.json())
+            .then((data) => {
+                console.log(data);
+                if (data.length > 0) {
+                    username = data[0].Username;
+                    this.setState({ backend_user_name: username, valid_credentials: true });
+                    this.props.username(username);
+                    this.props.onLogin(true);
+                    this.props.routerprops.history.push("/dashboard/calendar");
+                }
+                else {
+                    this.setState({ valid_credentials: false });
+                }
+
+
+            })
+            .catch(console.log)
 
     }
 
@@ -55,7 +68,7 @@ class Login extends Component {
                 <button type="submit" className="btn btn-primary btn-block" onClick={this.checkLogin}> Submit </button>
                 {this.state.entered_email === false ? <p> Email not entered! </p> : <p></p>}
                 {this.state.entered_pw === false ? <p>Password not entered! </p> : <p></p>}
-                {this.state.valid_credentials === false ? <p> Wrong email or password! Pleae try again! </p> : <p></p>}
+                {this.state.valid_credentials === false ? <p> Wrong email or password! Please try again! </p> : <p></p>}
 
                 <p className="forgot-password-text-right">
                     Forgot <a href="#"> password?</a>

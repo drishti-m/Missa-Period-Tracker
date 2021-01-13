@@ -46,7 +46,6 @@ class PeriodCalendar extends Component {
         }
     }
     retrieveAPI = (e) => {
-        const proxyurl = "https://cors-anywhere.herokuapp.com/";
         const url = "http://127.0.0.1:5000/user?id=drish";
         //fetch('')
         fetch(url)
