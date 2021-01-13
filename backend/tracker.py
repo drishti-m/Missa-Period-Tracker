@@ -50,6 +50,25 @@ def page2():
     cur.close()
     return json.dumps(json_data, default=str)
 
+@app.route("/search", methods=['GET'])
+def search_field():
+    username = request.args.get('username')
+    cur = mysql.connection.cursor()
+    cur.execute('''SELECT Username FROM 
+                User_Account as UA WHERE 
+                UA.Username ="''' + username + '''";''')
+
+    row_headers=[x[0] for x in cur.description] #this will extract row headers
+    rv = cur.fetchall()
+    # return as json
+    json_data=[]
+    for result in rv:
+        json_data.append(dict(zip(row_headers,result)))
+    #adding str to make date serializable
+    cur.close()
+    return json.dumps(json_data, default=str)
+
+#TO-DO: save password hash instead of password
 @app.route("/authentication", methods=['GET'])
 def authenticate():
     email = request.args.get('email')
@@ -70,7 +89,7 @@ def authenticate():
     cur.close()
     return json.dumps(json_data, default=str)
     
-
+#TO-DO: save password hash instead of password
 @app.route("/signup", methods = ['GET'])
 def sign_up():
     dob = request.args.get('dob')

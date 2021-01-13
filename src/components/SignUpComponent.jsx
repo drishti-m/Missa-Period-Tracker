@@ -16,13 +16,20 @@ class SignUp extends Component {
 
     }
     check_user_name(value) {
-        //TO-DO: call API and check if the entry exists
-        if (value.length > 5) {
-            this.setState({ valid_username: true, username: value });
-        }
-        else {
-            this.setState({ valid_username: false, username: value });
-        }
+        //call API and check if the entry exists
+        const url = "http://127.0.0.1:5000/search?username=" + value;
+        fetch(url)
+            .then(res => res.json())
+            .then((data) => {
+                console.log(data);
+                if (data.length === 0) {
+                    this.setState({ valid_username: true, username: value });
+                }
+                else {
+                    this.setState({ valid_username: false, username: value });
+                }
+            })
+            .catch(console.log)
         return;
     }
     check_password(confirm_password) {
@@ -55,7 +62,7 @@ class SignUp extends Component {
         if (this.state.email_id !== "" && this.state.name !== "" &&
             this.state.password !== "" && this.state.confirm_pw !== "" &&
             this.state.username !== "") {
-            // TO-DO: add to database through API
+            // add to database through API
             const url = "http://127.0.0.1:5000/signup?email=" + this.state.email_id +
                 "&username=" + this.state.username +
                 "&name=" + this.state.name +
