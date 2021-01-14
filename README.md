@@ -1,12 +1,48 @@
-# Getting Started with Create React App
+# Missa Period Tracker
+
+## Table of Contents
+
+* [About the Project](#about-the-project)
+    * [Built with](#built-with)
+* [Getting Started](#getting-started)
+    * [Run the app](#run-the-app)    
+    * [Available Scripts](#available-scripts)
+* [Contributing](#contributing)
+
+## About the Project
+
+Missa Period Tracker is a responsive web app, built for women to help them track their period dates and symptoms. Keeping track of periods, whether regular or irregular, manually is a strenuous task. Missa helps you save daily logs to keep your health in check.
+
+### Built with
+* React JS
+* Flask
+* SQL
+* HTML
+* CSS
+* Bootstrap
+
+## Getting started
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+### Run the app
+
+You need two servers running at the same time, one for front-end and one for backend.
+
+* For front-end, stay in the directory `period_tracker` and run
+``` npm start ```
+It will open a React page on your browser. 
+
+* For back-end, first create a local SQL database with reference to the file `period_tracker/backend/dummy_db.sql` and `period_tracker/backend/make_database.sh`. Make sure to have the same database name, table relations and column names. Then, go to the directory `period_tracker/backend` and run
+```python tracker.py```
+Then, open `http://127.0.0.1:5000` on your browser.
+
+
+### Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+#### `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -14,12 +50,12 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm test`
+#### `npm test`
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+#### `npm run build`
 
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
@@ -29,7 +65,7 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+#### `npm run eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
@@ -39,32 +75,13 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Contributing
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/Feature_Name`)
+3. Commit your Changes (`git commit -m 'Add some Feature_Name`)
+4. Push to the Branch (`git push origin feature/Feature_Name`)
+5. Open a Pull Request
