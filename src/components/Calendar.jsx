@@ -88,7 +88,6 @@ class PeriodCalendar extends Component {
                         </div>
                     </div>
                 </div>
-                <button onClick={this.retrieveAPI}>Get Data</button>
             </div >
         )
     }

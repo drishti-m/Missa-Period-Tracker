@@ -1,6 +1,7 @@
 import { es } from 'date-fns/esm/locale';
 import React, { Component } from 'react';
 import './Login.css';
+import sha256 from 'crypto-js/sha256';
 
 class Login extends Component {
 
@@ -12,9 +13,12 @@ class Login extends Component {
         };
 
     }
+    sha_hash(password) {
+        var hash = sha256(password);
+        return hash.toString();
+    }
     checkLogin = (e) => {
         //check credentials
-        //if creds exist:
         e.preventDefault();
         if (this.state.email_id === "") {
             this.setState({ entered_email: false });
@@ -23,14 +27,15 @@ class Login extends Component {
         if (this.state.password === "") {
             this.setState({ entered_pw: false });
         }
-
+        var pwHash = this.sha_hash(this.state.password);
+        console.log(pwHash);
         const url = "http://127.0.0.1:5000/authentication?email=" +
-            this.state.email_id + "&password=" + this.state.password;
+            this.state.email_id + "&pw=" + pwHash;
         var username;
         fetch(url)
             .then(res => res.json())
             .then((data) => {
-                console.log(data);
+                console.log("Username" + data[0].Username);
                 if (data.length > 0) {
                     username = data[0].Username;
                     this.setState({ backend_user_name: username, valid_credentials: true });

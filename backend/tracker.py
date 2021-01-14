@@ -1,4 +1,4 @@
-import json
+import json, random
 from flask import Flask, request, render_template, jsonify
 # import database
 from flask_mysqldb import MySQL
@@ -15,6 +15,7 @@ app.config['MYSQL_PASSWORD'] = 'drishti'
 app.config['MYSQL_DB'] = 'period_tracker'
 
 mysql = MySQL(app)
+serverRandom = 0
 
 @app.route('/')
 def index():
@@ -68,16 +69,16 @@ def search_field():
     cur.close()
     return json.dumps(json_data, default=str)
 
-#TO-DO: save password hash instead of password
 @app.route("/authentication", methods=['GET'])
 def authenticate():
     email = request.args.get('email')
-    pw = request.args.get('password')
+    pw = request.args.get('pw')
+    print("password i ",pw)
     cur = mysql.connection.cursor()
     cur.execute('''SELECT Username FROM 
                 User_Account as UA WHERE 
                 UA.Email_id ="''' + email + 
-                '''" AND UA.Password ="'''+ pw + '''";''')
+                '''" AND UA.Password_Hash ="'''+ pw + '''";''')
 
     row_headers=[x[0] for x in cur.description] #this will extract row headers
     rv = cur.fetchall()
@@ -87,9 +88,9 @@ def authenticate():
         json_data.append(dict(zip(row_headers,result)))
     #adding str to make date serializable
     cur.close()
+    #print("result is ", json.dumps(json_data, default=str))
     return json.dumps(json_data, default=str)
-    
-#TO-DO: save password hash instead of password
+
 @app.route("/signup", methods = ['GET'])
 def sign_up():
     dob = request.args.get('dob')
@@ -99,37 +100,54 @@ def sign_up():
     pw = request.args.get('pw')
 
     cur = mysql.connection.cursor()
+    #check if data alredy exists
+    cur.execute('''SELECT * FROM 
+                User_Account as UA WHERE 
+                UA.Email_id ="''' + email +  '''";''')
+    rv = cur.fetchall()   
+    row_headers=[x[0] for x in cur.description] 
+    json_data = []
+    existing_data=[]
+    for result in rv:
+        existing_data.append(dict(zip(row_headers,result)))
+    existing_data = json.dumps(existing_data, default=str)
 
-    cur.execute('''INSERT INTO 
-                User_Account(Date_of_Birth,Email_id,Name,Username,Password)
-                VALUES
-                ("'''+ dob + '''","''' +
-                 email + '''","''' + 
-                 name + '''","'''+
-                 username + '''","''' +
-                 pw + '''");''')
-    mysql.connection.commit()
+    if existing_data != "[]":
+        json_dict = {
+        'error': 'Email exists'}
+        json_data.append(json_dict)
+        json_data = json.dumps(json_data) 
+        print("Entry with same email already exists in database")
+    else:        
+        cur.execute('''INSERT INTO 
+                    User_Account(Date_of_Birth,Email_id,Name,Username,Password_Hash)
+                    VALUES
+                    ("'''+ dob + '''","''' +
+                    email + '''","''' + 
+                    name + '''","'''+
+                    username + '''","''' +
+                    pw + '''");''')
+        mysql.connection.commit()
+        rv = cur.fetchall()
 
-    rv = cur.fetchall()
-
-    #check if database has been updated
-    cur.execute('''SELECT Username FROM 
+        #check if database has been updated
+        cur.execute('''SELECT Username FROM 
                 User_Account as UA WHERE 
                 UA.Email_id ="''' + email + 
                 '''" AND UA.Username ="'''+ username + '''";''')
-    row_headers=[x[0] for x in cur.description] 
-    rv = cur.fetchall()
+        row_headers=[x[0] for x in cur.description] 
+        rv = cur.fetchall()
 
-    # return as json
-    json_data=[]
-    for result in rv:
-        json_data.append(dict(zip(row_headers,result)))
-    json_data = json.dumps(json_data, default=str)
+        # return as json
+        json_data=[]
+        for result in rv:
+            json_data.append(dict(zip(row_headers,result)))
+        json_data = json.dumps(json_data, default=str)
+        if json_data != "[]":
+            print("Succesfully updated database")
+        else:
+            print("Could not update database")
     cur.close()
-    if len(json_data) > 0:
-        print("Succesfully updated database")
-    else:
-        print("Could not update database")
     return json_data
 
 

@@ -1,5 +1,7 @@
 import './Nav.css';
 import React, { Component } from 'react';
+import sha256 from 'crypto-js/sha256';
+
 //import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 
 class SignUp extends Component {
@@ -11,12 +13,12 @@ class SignUp extends Component {
             password: "", confirm_pw: "", dob: "2021-01-01", matchingPassword: true,
             valid_username: true, entered_name: true, entered_email: true,
             entered_pw: true, entered_matching_pw: true, success: false,
-            backend_username: ""
+            backend_username: "", pwHash: "", existing_email: false
         };
 
     }
     check_user_name(value) {
-        //call API and check if the entry exists
+        //check if the entry exists
         const url = "http://127.0.0.1:5000/search?username=" + value;
         fetch(url)
             .then(res => res.json())
@@ -42,6 +44,14 @@ class SignUp extends Component {
         }
         return;
     }
+    sha_hash(password) {
+        var hash = sha256(password);
+        return hash.toString();
+    }
+    get_random_number(min, max) {
+        const rand = min + Math.random() * (max - min);
+        return rand;
+    }
     check_submission(e) {
         e.preventDefault();
         if (this.state.name === "") {
@@ -62,18 +72,24 @@ class SignUp extends Component {
         if (this.state.email_id !== "" && this.state.name !== "" &&
             this.state.password !== "" && this.state.confirm_pw !== "" &&
             this.state.username !== "") {
+
+            var pwHash = this.sha_hash(this.state.password);
+            //console.log("hash: " + pwHash);
             // add to database through API
             const url = "http://127.0.0.1:5000/signup?email=" + this.state.email_id +
                 "&username=" + this.state.username +
                 "&name=" + this.state.name +
-                "&pw=" + this.state.password +
+                "&pw=" + pwHash +
                 "&dob=" + this.state.dob;
             fetch(url)
                 .then(res => res.json())
                 .then((data) => {
                     console.log(data);
-                    if (data[0].Username.length > 0) {
-                        this.setState({ success: true, backend_username: data[0].Username });
+                    if (data[0].hasOwnProperty('error')) {
+                        this.setState({ success: false, existing_email: true });
+                    }
+                    else if (data[0].hasOwnProperty('Username')) {
+                        this.setState({ success: true, backend_username: data[0].Username, existing_email: false });
                         this.props.username(data[0].Username);
                         this.props.onSignup(true);
                         this.props.routerprops.history.push("/dashboard/calendar");
@@ -129,8 +145,7 @@ class SignUp extends Component {
                 { this.state.valid_username === false ? <p> Invalid username not allowed! </p> : <p></p>}
                 { this.state.entered_pw === false ? <p> Password blank not allowed!</p> : <p></p>}
                 { this.state.entered_matching_pw === false ? <p> Matching password blank not allowed! </p> : <p></p>}
-
-
+                {this.state.existing_email === true ? <p> An account with the email already exists!</p> : <p></p>}
                 <p className="forgot-password-text-right" >
                     Forgot <a href="#"> password?</a>
                 </p>
