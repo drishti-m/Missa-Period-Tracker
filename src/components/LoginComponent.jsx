@@ -28,15 +28,30 @@ class Login extends Component {
             this.setState({ entered_pw: false });
         }
         var pwHash = this.sha_hash(this.state.password);
-        console.log(pwHash);
-        const url = "http://127.0.0.1:5000/authentication?email=" +
-            this.state.email_id + "&pw=" + pwHash;
+        //console.log(pwHash);
+        const url = "http://127.0.0.1:5000/authentication"
         var username;
-        fetch(url)
+        var json_data = {
+            email: this.state.email_id,
+            pw: pwHash
+        }
+        fetch(url, {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: JSON.stringify(json_data)
+        })
             .then(res => res.json())
             .then((data) => {
-                console.log("Username" + data[0].Username);
-                if (data.length > 0) {
+                //console.log("Username" + data);
+                if (data[0].hasOwnProperty('error')) {
+                    this.setState({ valid_credentials: false });
+                }
+                else if (data[0].hasOwnProperty('Username')) {
                     username = data[0].Username;
                     this.setState({ backend_user_name: username, valid_credentials: true });
                     this.props.username(username);

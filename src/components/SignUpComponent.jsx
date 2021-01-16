@@ -76,12 +76,24 @@ class SignUp extends Component {
             var pwHash = this.sha_hash(this.state.password);
             //console.log("hash: " + pwHash);
             // add to database through API
-            const url = "http://127.0.0.1:5000/signup?email=" + this.state.email_id +
-                "&username=" + this.state.username +
-                "&name=" + this.state.name +
-                "&pw=" + pwHash +
-                "&dob=" + this.state.dob;
-            fetch(url)
+            const url = "http://127.0.0.1:5000/signup?"
+            var json_data = {
+                email: this.state.email_id,
+                username: this.state.username,
+                name: this.state.name,
+                pw: pwHash,
+                dob: this.state.dob
+            }
+            fetch(url, {
+                method: "POST",
+                mode: "cors",
+                cache: "no-cache",
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: JSON.stringify(json_data)
+            })
                 .then(res => res.json())
                 .then((data) => {
                     console.log(data);

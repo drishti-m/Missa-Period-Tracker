@@ -66,14 +66,18 @@ def search_field():
     for result in rv:
         json_data.append(dict(zip(row_headers,result)))
     #adding str to make date serializable
+
     cur.close()
     return json.dumps(json_data, default=str)
 
-@app.route("/authentication", methods=['GET'])
+@app.route("/authentication", methods=['POST'])
 def authenticate():
-    email = request.args.get('email')
-    pw = request.args.get('pw')
-    print("password i ",pw)
+    #email = request.args.get('email')
+    #pw = request.args.get('pw')
+    dict_data = request.get_json()
+    email = dict_data['email']    
+    pw = dict_data['pw']
+    #print("password i ",pw)
     cur = mysql.connection.cursor()
     cur.execute('''SELECT Username FROM 
                 User_Account as UA WHERE 
@@ -87,18 +91,29 @@ def authenticate():
     for result in rv:
         json_data.append(dict(zip(row_headers,result)))
     #adding str to make date serializable
+    if len(json_data) == 0:
+        print("credential doesn't exist")
+        json_dict = {
+        'error': 'Invalid Credentials'}
+        json_data.append(json_dict)
+    json_data = json.dumps(json_data, default=str)
     cur.close()
-    #print("result is ", json.dumps(json_data, default=str))
-    return json.dumps(json_data, default=str)
+    #print("json data", json_data)
+    return json_data
 
-@app.route("/signup", methods = ['GET'])
+@app.route("/signup", methods = ['POST'])
 def sign_up():
-    dob = request.args.get('dob')
-    name = request.args.get('name')
-    username = request.args.get('username')
-    email = request.args.get('email')
-    pw = request.args.get('pw')
-
+    # dob = request.args.get('dob')
+    # name = request.args.get('name')
+    # username = request.args.get('username')
+    # email = request.args.get('email')
+    # pw = request.args.get('pw')
+    dict_data = request.get_json()
+    dob = dict_data['dob']
+    name = dict_data['name']
+    username = dict_data['username']
+    email = dict_data['username']
+    pw = dict_data['pw']
     cur = mysql.connection.cursor()
     #check if data alredy exists
     cur.execute('''SELECT * FROM 
