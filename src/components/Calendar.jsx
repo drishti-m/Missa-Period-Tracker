@@ -21,6 +21,7 @@ class PeriodCalendar extends Component {
             endDate: currentDate,
             key: 'selection',
             validDate: true,
+            username: ""
         };
     }
     SelectDate = (date) => {
@@ -40,6 +41,28 @@ class PeriodCalendar extends Component {
     saveEndDate = (e) => {
         if (this.state.selectedDate >= this.state.startDate) {
             this.setState({ validDate: true, endDate: this.state.selectedDate });
+            const url = "http://127.0.0.1:5000/user/period"
+            var currUsername = "invalid";
+            var json_data = {
+                start: moment(this.state.startDate).format('YYYY-MM-DD'),
+                end: moment(this.state.selectedDate).format('YYYY-MM-DD'),
+                username: currUsername
+            }
+            fetch(url, {
+                method: "POST",
+                mode: "cors",
+                cache: "no-cache",
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: JSON.stringify(json_data)
+            })
+                .then(res => res.json())
+                .then((data) => {
+                    console.log("Saved in database", data)
+                })
+                .catch(console.log)
         }
         else {
             this.setState({ validDate: false });
