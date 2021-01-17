@@ -6,8 +6,12 @@ import App from '../App';
 //import { BrowserRouter, Route, Switch, Link } from 'react-router-dom'
 
 class Dashboard extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        this.state = { username: this.props.username }
+    }
+    CPeriodCalendar = (props) => {
+        return <PeriodCalendar username={this.state.username} />
     }
 
     render() {
@@ -17,7 +21,7 @@ class Dashboard extends Component {
 
                 <Switch>
                     <Route path="/dashboard/symptoms" component={Symptoms} />
-                    <Route path="/dashboard/calendar" component={PeriodCalendar} />
+                    <Route path="/dashboard/calendar" component={this.CPeriodCalendar} />
                     <Route path="/dashboard/logout" component={App} />
                 </Switch>
             </div >

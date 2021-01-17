@@ -2,16 +2,14 @@ import React, { Component } from 'react';
 import './calendar.css';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
-import { Calendar, DateRange } from 'react-date-range';
+import { Calendar } from 'react-date-range';
 import moment from 'moment';
 
 
 
 class PeriodCalendar extends Component {
-
-
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         const currentDate = new Date();
         currentDate.setDate(currentDate.getDate() + 17);
 
@@ -21,7 +19,11 @@ class PeriodCalendar extends Component {
             endDate: currentDate,
             key: 'selection',
             validDate: true,
-            username: ""
+            username: this.props.username,
+            pastStartDate: new Date(),
+            pastEndDate: new Date(),
+            futureStartDate: new Date(),
+            futureEndDate: new Date()
         };
     }
     SelectDate = (date) => {
@@ -41,8 +43,9 @@ class PeriodCalendar extends Component {
     saveEndDate = (e) => {
         if (this.state.selectedDate >= this.state.startDate) {
             this.setState({ validDate: true, endDate: this.state.selectedDate });
-            const url = "http://127.0.0.1:5000/user/period"
-            var currUsername = "invalid";
+            const url = "http://127.0.0.1:5000/user/period/store"
+            var currUsername = this.state.username;
+            //console.log("in calendar: " + currUsername);
             var json_data = {
                 start: moment(this.state.startDate).format('YYYY-MM-DD'),
                 end: moment(this.state.selectedDate).format('YYYY-MM-DD'),
@@ -63,10 +66,24 @@ class PeriodCalendar extends Component {
                     console.log("Saved in database", data)
                 })
                 .catch(console.log)
+            this.getPastFuturePeriodDates(this.state.selectedDate)
         }
         else {
             this.setState({ validDate: false });
         }
+    }
+    getPastFuturePeriodDates(currentEndDate) {
+        //TO-DO get recent most stored period date from database as past date
+        //TO-DO calculate on basis of history when is next estimated period date
+        var pastStartDate = new Date()
+        pastStartDate.setDate(this.state.startDate.getDate() - 28)
+        var pastEndDate = new Date()
+        pastEndDate.setDate(currentEndDate.getDate() - 29)
+        var futureStartDate = new Date()
+        var futureEndDate = new Date()
+        futureStartDate.setDate(this.state.startDate.getDate() + 27)
+        futureEndDate.setDate(currentEndDate.getDate() + 28)
+        this.setState({ pastStartDate: pastStartDate, pastEndDate: pastEndDate, futureStartDate: futureStartDate, futureEndDate: futureEndDate })
     }
     retrieveAPI = (e) => {
         const url = "http://127.0.0.1:5000/user?id=drish";
@@ -108,9 +125,22 @@ class PeriodCalendar extends Component {
                                         to <b> {moment(this.state.endDate).format('MMMM DD YYYY')}</b>
                                 </p>
                             </div>
+                            <div className="col">
+                                <p class="card-text custom-prev-range-text"> Previous Period Date: <b>
+                                    {moment(this.state.pastStartDate).format('MMMM DD YYYY')} </b>
+                                        to <b> {moment(this.state.pastEndDate).format('MMMM DD YYYY')}</b>
+                                </p>
+                            </div>
+                            <div className="col">
+                                <p class="card-text custom-future-range-text"> Next Expected Period Date: <b>
+                                    {moment(this.state.futureStartDate).format('MMMM DD YYYY')} </b>
+                                        to <b> {moment(this.state.futureEndDate).format('MMMM DD YYYY')}</b>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div >
         )
     }

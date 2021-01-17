@@ -19,6 +19,20 @@
     text-align: center;
 }
 
+.custom-prev-range-text{
+    font-family: Playfair Display;
+    color: darkmagenta;
+    mix-blend-mode: darken;
+    text-align: center;
+}
+
+.custom-future-range-text{
+    font-family: Playfair Display;
+    color: darkred;
+    mix-blend-mode: darken;
+    text-align: center;
+}
+
 .custom-range-box{
     padding-top: 2%;
 }

@@ -160,7 +160,7 @@ def sign_up():
     cur.close()
     return json_data
 
-@app.route("/user/period", methods=['POST'])
+@app.route("/user/period/store", methods=['POST'])
 def update_period_dates():
     dict_data = request.get_json()
     start = dict_data['start']

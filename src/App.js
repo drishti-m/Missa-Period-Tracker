@@ -11,8 +11,8 @@ import Home from './components/Home';
 
 class App extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = { loggedIn: true, username: "User" };
   }
   ChangeLogin = (e) => {
@@ -30,6 +30,10 @@ class App extends Component {
     return <SignUp onSignup={this.ChangeLogin} routerprops={props} username={this.setUsername} />
   }
 
+  CDashboard = (props) => {
+    return <Dashboard username={this.state.username} />
+  }
+
   render() {
     return (
       <Router>
@@ -41,7 +45,7 @@ class App extends Component {
               <Route path="/about-us" component={AboutUs} />
               <Route path="/login" component={this.CLogin} />
               <Route path="/sign-up" component={this.CSignup} />
-              <Route path="/dashboard/" component={Dashboard} />
+              <Route path="/dashboard/" component={this.CDashboard} />
             </Switch>
           </div>
           <div class="card-footer text-muted text-center footer-custom">
