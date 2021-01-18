@@ -33,7 +33,7 @@ You need two servers running at the same time, one for front-end and one for bac
 ``` npm start ```
 It will open a React page on your browser. 
 
-* For back-end, first create a local SQL database with reference to the file `period_tracker/backend/dummy_db.sql` and `period_tracker/backend/make_database.sh`. Make sure to have the same database name, table relations and column names. Then, go to the directory `period_tracker/backend` and open ```tracker.py```, change the app configuration with your database credentials(line 12-15), and run
+* For back-end, first create a local SQL database with reference to the dummy files in `period_tracker/backend/dummy sql` and `period_tracker/backend/make_database.sh`. Make sure to have the same database name, table relations and column names. Then, go to the directory `period_tracker/backend` and open ```tracker.py```, change the app configuration with your database credentials(line 12-15), and run
 ```python tracker.py```
 Then, open `http://127.0.0.1:5000` on your browser.
 

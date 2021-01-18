@@ -11,7 +11,15 @@ class PeriodCalendar extends Component {
     constructor(props) {
         super(props);
         const currentDate = new Date();
+        const pastStart = new Date();
+        const pastEnd = new Date();
+        const futureStart = new Date();
+        const futureEnd = new Date();
         currentDate.setDate(currentDate.getDate() + 17);
+        pastStart.setDate(pastStart.getDate() - 37);
+        pastEnd.setDate(pastEnd.getDate() - 29);
+        futureStart.setDate(futureStart.getDate() + 27);
+        futureEnd.setDate(futureEnd.getDate() + 38)
 
         this.state = {
             selectedDate: new Date(),
@@ -20,10 +28,10 @@ class PeriodCalendar extends Component {
             key: 'selection',
             validDate: true,
             username: this.props.username,
-            pastStartDate: new Date(),
-            pastEndDate: new Date(),
-            futureStartDate: new Date(),
-            futureEndDate: new Date()
+            pastStartDate: pastStart,
+            pastEndDate: pastEnd,
+            futureStartDate: futureStart,
+            futureEndDate: futureEnd
         };
     }
     SelectDate = (date) => {
