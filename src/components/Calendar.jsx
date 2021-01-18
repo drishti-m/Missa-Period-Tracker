@@ -27,6 +27,7 @@ class PeriodCalendar extends Component {
             endDate: currentDate,
             key: 'selection',
             validDate: true,
+            futureInput: false,
             username: this.props.username,
             pastStartDate: pastStart,
             pastEndDate: pastEnd,
@@ -40,6 +41,13 @@ class PeriodCalendar extends Component {
         console.log("after setting, Date selected is: ", this.state.selectedDate, date);
     }
     saveStartDate = (e) => {
+        var today = new Date()
+        if (this.state.selectedDate > today) {
+            this.setState({ futureInput: true })
+        }
+        else {
+            this.setState({ futureInput: false })
+        }
         if (this.state.selectedDate <= this.state.endDate) {
             this.setState({ validDate: true, startDate: this.state.selectedDate });
         }
@@ -131,7 +139,11 @@ class PeriodCalendar extends Component {
                         <button type="button" class="btn btn-lg btn-danger" data-bs-toggle="popover"
                             title="Popover title" data-bs-content=" Start Date can't be later than End Date!">Invalid Date Range</button>
                     </div>}
-
+                { !this.state.futureInput ? <p class="d-lg-none"></p> :
+                    <div class="center-block text-center custom-invalid">
+                        <button type="button" class="btn btn-lg btn-danger" data-bs-toggle="popover"
+                            title="Popover title" data-bs-content=" Can't set date in the future">Future Data not allowed</button>
+                    </div>}
                 <div class="col custom-range-box">
                     <div class="card text-dark bg-light mb-3 mx-auto w-50">
                         <div class="card-body">
