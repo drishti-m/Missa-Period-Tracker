@@ -72,34 +72,42 @@ class PeriodCalendar extends Component {
                 .then(res => res.json())
                 .then((data) => {
                     console.log("Saved in database", data)
+                    this.getPastFuturePeriodDates(this.state.selectedDate)
                 })
                 .catch(console.log)
-            this.getPastFuturePeriodDates(this.state.selectedDate)
+
         }
         else {
             this.setState({ validDate: false });
         }
     }
     getPastFuturePeriodDates(currentEndDate) {
-        //TO-DO get recent most stored period date from database as past date
-        //TO-DO calculate on basis of history when is next estimated period date
-        var pastStartDate = new Date()
-        pastStartDate.setDate(this.state.startDate.getDate() - 28)
-        var pastEndDate = new Date()
-        pastEndDate.setDate(currentEndDate.getDate() - 29)
-        var futureStartDate = new Date()
-        var futureEndDate = new Date()
-        futureStartDate.setDate(this.state.startDate.getDate() + 27)
-        futureEndDate.setDate(currentEndDate.getDate() + 28)
-        this.setState({ pastStartDate: pastStartDate, pastEndDate: pastEndDate, futureStartDate: futureStartDate, futureEndDate: futureEndDate })
-    }
-    retrieveAPI = (e) => {
-        const url = "http://127.0.0.1:5000/user?id=drish";
-        //fetch('')
+        const url = 'http://127.0.0.1:5000/user/period/retrieve?username=' + this.state.username;
         fetch(url)
             .then(res => res.json())
-            .then((data) => console.log(data))
+            .then((data) => {
+                // console.log(data);
+                let sortedDates = data.sort((a, b) => Date.parse(new Date(a.Start_period_date.split("/").reverse().join("-"))) - Date.parse(new Date(b.Start_period_date.split("/").reverse().join("-"))));
+                //console.log(sortedDates);
+                var last = sortedDates.slice(-1)[0];
+                if (last.hasOwnProperty('Start_period_date') && last.hasOwnProperty('End_period_date')) {
+                    var pastStart = last['Start_period_date']
+                    var pastEnd = last['End_period_date']
+                    var futureStart = last['Start_period_date']
+                    var futureEnd = last['End_period_date']
+                    futureStart.setDate(futureStart.getDate() + 28)
+                    futureEnd.setDate(futureEnd.getDate() + 29)
+                    this.setState({
+                        pastStartDate: pastStart,
+                        pastEndDate: pastEnd,
+                        futureStartDate: futureStart,
+                        futureEndDate: futureEnd
+                    })
+                }
+
+            })
             .catch(console.log)
+        return;
     }
     render() {
         return (

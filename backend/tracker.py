@@ -72,8 +72,6 @@ def search_field():
 
 @app.route("/authentication", methods=['POST'])
 def authenticate():
-    #email = request.args.get('email')
-    #pw = request.args.get('pw')
     dict_data = request.get_json()
     email = dict_data['email']    
     pw = dict_data['pw']
@@ -246,5 +244,37 @@ def update_period_dates():
     cur.close()
 
     return json.dumps(json_data, default=str)
+
+
+
+@app.route("/user/period/retrieve", methods=['POST', 'GET'])
+def retrieve_periods():
+    #dict_data = request.get_json()
+    #username = dict_data['username']    
+    username = request.args.get('username')
+    #print("password i ",pw)
+    cur = mysql.connection.cursor()
+    cur.execute('''SELECT * FROM 
+                Period_Dates as PD, user_period as UP WHERE 
+                UP.Username ="''' + username +  '''" AND PD.period_ID = UP.period_ID;''')
+
+    row_headers=[x[0] for x in cur.description] #this will extract row headers
+    rv = cur.fetchall()
+    print(rv)
+    # return as json
+    json_data=[]
+    for result in rv:
+        json_data.append(dict(zip(row_headers,result)))
+    #adding str to make date serializable
+    # if len(json_data) == 0:
+    #     print("credential doesn't exist")
+    #     json_dict = {
+    #     'error': 'Invalid Credentials'}
+    #     json_data.append(json_dict)
+    json_data = json.dumps(json_data, default=str)
+    cur.close()
+    #print("json data", json_data)
+    return json_data
+
 
 app.run()
