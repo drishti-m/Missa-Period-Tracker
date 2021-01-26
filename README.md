@@ -23,9 +23,10 @@ Missa Period Tracker is a responsive web app, built for women to help them track
 
 ### Screenshots of running web app
 
-
+Desktop version:
 ![Desktop Screenshot](src/assets/Screenshot_web.png)
 
+Mobile version: 
 ![Mobile Screenshot](src/assets/Screenshot_mob.png)
 
 
