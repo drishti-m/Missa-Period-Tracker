@@ -21,6 +21,15 @@ Missa Period Tracker is a responsive web app, built for women to help them track
 * CSS
 * Bootstrap
 
+### Screenshots of running web app
+
+
+![Desktop Screenshot](src/assets/Screenshot_web.png)
+
+![Mobile Screenshot](src/assets/Screenshot_mob.png)
+
+
+
 ## Getting started
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
